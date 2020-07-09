@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Pages/HomePage/Components/home_page.dart';
-//import 'package:firebase_auth_provider/pages/sign_in.dart';
+import 'Pages/LoginPage/Components/login_page.dart';
 import 'Services/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +13,7 @@ class MyApp extends StatefulWidget {
 
   @override
   _AppState createState() {
-    _AppState();
+    return _AppState();
   }
 }
 
@@ -37,9 +37,9 @@ class _AppState extends State<MyApp> {
                 case AuthStatus.Authenticated:
                   return HomePage();
                 case AuthStatus.Authenticating:
-                  ///return SignIn();
+                  return SignIn();
                 case AuthStatus.Unauthenticated:
-                  return HomePage();  ///CAMBIAR
+                  return SignIn();   
               }
               return null;
             },

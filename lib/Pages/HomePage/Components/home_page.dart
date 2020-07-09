@@ -4,6 +4,8 @@ import 'package:FirebaseFlutterApp/Services/auth.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
+
+  HomePage({Key key}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return HomePageState();
