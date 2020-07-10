@@ -1,99 +1,104 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../Models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-enum AuthStatus{
-  Uninitialized,  
+enum AuthStatus {
+  Uninitialized,
   Authenticated,
   Authenticating,
   Unauthenticated
 }
 
 class AuthService with ChangeNotifier {
-  final FirebaseAuth auth; 
+  final FirebaseAuth auth;
+
   GoogleSignInAccount googleUser;
-  User user = new User();
 
-  final Firestore db = Firestore.instance;   ///db
-  AuthStatus status = AuthStatus.Uninitialized;  ///status
+  AuthStatus status = AuthStatus.Uninitialized;
 
-  final GoogleSignIn googleSignInV = GoogleSignIn();  //sigIn
+  final GoogleSignIn googleSignInV = GoogleSignIn(); //sigIn
 
   AuthService.instance() : auth = FirebaseAuth.instance {
-    auth.onAuthStateChanged.listen(_onAuthStateChanged);  /// listen the state of the status
+    auth.onAuthStateChanged.listen(_onAuthStateChanged);
   }
-  
-/// This function chage the status
+
+  /// This function looks for changes in the status and notify the Listeners
   Future<void> _onAuthStateChanged(FirebaseUser firebaseUser) async {
     if (firebaseUser == null) {
       status = AuthStatus.Unauthenticated;
     } else {
-      DocumentSnapshot userSnap = await db
-        .collection('users')
-        .document(firebaseUser.uid)
-        .get();
-
-      user.setFromFireStore(userSnap);
       status = AuthStatus.Authenticated;
     }
-
     notifyListeners();
   }
 
-  Future<FirebaseUser> googleSignIn() async {
+  Future<void> googleSignIn() async {
     status = AuthStatus.Authenticating;
     notifyListeners();
-
     try {
-      GoogleSignInAccount googleUser = await googleSignInV.signIn();  //choose account
+      GoogleSignInAccount googleUser =
+          await googleSignInV.signIn(); //choose account
       GoogleSignInAuthentication googleAuth = await googleUser.authentication;
       this.googleUser = googleUser;
 
-      final AuthCredential credential = GoogleAuthProvider
-        .getCredential(
-          idToken: googleAuth.idToken,
-          accessToken: googleAuth.accessToken,
-        );
-      AuthResult authResult = await auth.signInWithCredential(credential);
-      FirebaseUser userAuth = authResult.user;
-      await updateUserData(userAuth);
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        idToken: googleAuth.idToken,
+        accessToken: googleAuth.accessToken,
+      );
+
+      await auth.signInWithCredential(credential);
+      //FirebaseUser userAuth = authResult.user;
     } catch (e) {
       status = AuthStatus.Uninitialized;
       notifyListeners();
-      return null;
     }
   }
 
+  Future<void> signInWithEmailAndPasswordOwned(
+      String email, String password) async {
+    status = AuthStatus.Authenticating;
+    notifyListeners();
+    try {
+      await auth.signInWithCredential(EmailAuthProvider.getCredential(
+        email: email,
+        password: password,
+      ));
+    } catch (e) {
+      status = AuthStatus.Uninitialized;
+      notifyListeners();
+    }
+  }
 
-/// Update data in the db
-  Future<DocumentSnapshot> updateUserData(FirebaseUser userAuth) async {
-    DocumentReference userRef = db
-      .collection('users')
-      .document(userAuth.uid);
-
-    userRef.setData({
-      'uid': userAuth.uid,
-      'email': userAuth.email,
-      'lastSign': DateTime.now(),
-      'photoURL': userAuth.photoUrl,
-      'displayName': userAuth.displayName,
-    }, merge: true);
-
-    DocumentSnapshot userData = await userRef.get();
-
-    return userData;
+  Future<void> signInWithFacebook() async {
+    status = AuthStatus.Authenticating;
+    notifyListeners();
+    try {
+      FacebookLogin facebookLogin = new FacebookLogin();
+      var result = await facebookLogin.logIn(['email']);
+      if (result.status == FacebookLoginStatus.loggedIn) {
+        await auth.signInWithCredential(
+          FacebookAuthProvider.getCredential(
+              accessToken: result.accessToken.token),
+        );
+      }
+    } catch (e) {
+      status = AuthStatus.Uninitialized;
+      notifyListeners();
+    }
   }
 
   void signOut() {
+    if (googleUser != null) {
+      googleUser.clearAuthCache();
+    }
+    googleSignInV.signOut();
+
     auth.signOut();
     status = AuthStatus.Unauthenticated;
     notifyListeners();
   }
 
   AuthStatus get statusAuth => status;
-  User get userA => user;
   GoogleSignInAccount get googleUserSA => googleUser;
-
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Pages/HomePage/Components/home_page.dart';
+import 'Pages/HomePage/home_page.dart';
 import 'Pages/LoginPage/Components/login_page.dart';
 import 'Services/auth.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +39,7 @@ class _AppState extends State<MyApp> {
                 case AuthStatus.Authenticating:
                   return SignIn();
                 case AuthStatus.Unauthenticated:
-                  return SignIn();   
+                  return SignIn();
               }
               return null;
             },

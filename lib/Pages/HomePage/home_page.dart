@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart'; //todo flutter
 import 'package:flutter/cupertino.dart'; //IOSink
-import 'package:FirebaseFlutterApp/Services/auth.dart'; 
+import 'package:FirebaseFlutterApp/Services/auth.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
-
   HomePage({Key key}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -12,8 +11,7 @@ class HomePage extends StatefulWidget {
   }
 }
 
-class HomePageState extends State<HomePage> { 
- 
+class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
@@ -22,7 +20,7 @@ class HomePageState extends State<HomePage> {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        color: Colors.lightGreen,
+        color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -50,4 +48,3 @@ class HomePageState extends State<HomePage> {
     );
   }
 }
- 
