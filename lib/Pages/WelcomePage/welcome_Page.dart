@@ -84,7 +84,7 @@ class _WelcomePageState extends State<WelcomePage> {
         child: Column(
           children: <Widget>[
             Text(
-              'Welcome to kemeds',
+              'Welcome to KEMEDS',
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
             Image.asset(

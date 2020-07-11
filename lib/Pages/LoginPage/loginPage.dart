@@ -240,7 +240,7 @@ class _LogViewState extends State<LogView> {
           SocialSignInButton(
             key: googleButtonKey,
             assetName: 'assets/go-logo.png',
-            text: 'signInWithGoogle',
+            text: 'SignIn With Google',
             onPressed: isLoading
                 ? null
                 : () async {

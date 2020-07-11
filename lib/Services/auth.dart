@@ -17,7 +17,6 @@ class AuthService with ChangeNotifier {
   GoogleSignInAccount googleUser;
 
   AuthStatus status = AuthStatus.Uninitialized;
-
   final GoogleSignIn googleSignInV = GoogleSignIn(); //sigIn
 
   AuthService.instance() : auth = FirebaseAuth.instance {
@@ -58,16 +57,19 @@ class AuthService with ChangeNotifier {
 
   Future<void> googleSignIn() async {
     try {
+      print("ENTRO A SIGN IN");
       GoogleSignInAccount googleUser =
           await googleSignInV.signIn(); //choose account
+      print("MURIÓ                                             AQUI");
       GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      print("GOOGLE AUTH: " + googleAuth.idToken);
       this.googleUser = googleUser;
 
       final AuthCredential credential = GoogleAuthProvider.getCredential(
         idToken: googleAuth.idToken,
         accessToken: googleAuth.accessToken,
       );
-
+      print("BEFORE");
       await auth.signInWithCredential(credential);
       if (auth.currentUser() != null) {
         status = AuthStatus.Authenticated;
