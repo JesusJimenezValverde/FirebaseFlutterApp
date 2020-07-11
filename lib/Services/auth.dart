@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 enum AuthStatus {
@@ -33,16 +33,19 @@ class AuthService with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> changeStatus(String state){
-    switch(state){
+  Future<void> changeStatus(String state) {
+    switch (state) {
       case 'Unauthenticated':
         status = AuthStatus.Unauthenticated;
         break;
-      case 'Uninitialized' : status = AuthStatus.Uninitialized;
+      case 'Uninitialized':
+        status = AuthStatus.Uninitialized;
         break;
-      case 'Authenticated' : status = AuthStatus.Authenticated;
+      case 'Authenticated':
+        status = AuthStatus.Authenticated;
         break;
-      case 'Authenticating' : status = AuthStatus.Authenticating;
+      case 'Authenticating':
+        status = AuthStatus.Authenticating;
         break;
     }
     notifyListeners();
@@ -82,6 +85,24 @@ class AuthService with ChangeNotifier {
     } catch (e) {
       print("Account does not exist");
       status = AuthStatus.Unauthenticated;
+      notifyListeners();
+    }
+  }
+
+  Future<void> signInWithFacebook() async {
+    status = AuthStatus.Authenticating;
+    notifyListeners();
+    try {
+      FacebookLogin facebookLogin = new FacebookLogin();
+      var result = await facebookLogin.logIn(['email']);
+      if (result.status == FacebookLoginStatus.loggedIn) {
+        await auth.signInWithCredential(
+          FacebookAuthProvider.getCredential(
+              accessToken: result.accessToken.token),
+        );
+      }
+    } catch (e) {
+      status = AuthStatus.Uninitialized;
       notifyListeners();
     }
   }

@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 
 class LogView extends StatefulWidget {
   LogView({Key key, this.title}) : super(key: key);
-a
   final String title;
 
   @override
@@ -75,63 +74,62 @@ class _LogViewState extends State<LogView> {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
-          height: height,
-          child: Stack(
-            children: <Widget>[
-              Positioned(
-                  top: -height * .15,
-                  right: -MediaQuery.of(context).size.width * .4,
-                  child: BezierContainer()),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(height: height * .2),
-                      _title(),
-                      SizedBox(height: 55),
-                      _emailPasswordWidget(),
-                      SizedBox(height: 20),
-                      _submitButton(),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        alignment: Alignment.centerRight,
-                        child: Text('Forgot Password ?',
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w500)),
-                      ),
-                      _divider(),
-                      _socialLogin(),
-                      SizedBox(height: height * .055),
-                      _createAccountLabel(),
-                    ],
+
+      height: height,
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+              top: -height * .15,
+              right: -MediaQuery.of(context).size.width * .4,
+              child: BezierContainer()),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: height * .2),
+                  _title(),
+                  SizedBox(height: 55),
+                  _emailPasswordWidget(),
+                  SizedBox(height: 20),
+                  _submitButton(),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    alignment: Alignment.centerRight,
+                    child: Text('Forgot Password ?',
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w500)),
                   ),
-                ),
+                  _divider(),
+                  _socialLogin(),
+                  SizedBox(height: height * .055),
+                  _createAccountLabel(),
+                ],
               ),
-              Positioned(top: 40, left: 0, child: _backButton()),
-            ],
+            ),
           ),
-        ));
+          Positioned(top: 40, left: 0, child: _backButton()),
+        ],
+      ),
+    ));
   }
 
   Widget _submitButton() {
-
     final authService = Provider.of<AuthService>(context);
     bool isLoading = false;
     return RaisedButton(
-      onPressed: isLoading ? null
-        : () async
-      {
-      print(loginController.text);
-      print(passController.text);
-      await authService.signInWithEmailAndPasswordOwned(
-          loginController.text, passController.text);
-
-      },
-      padding: const EdgeInsets.all(0.0),
-      child:Container(
+        onPressed: isLoading
+            ? null
+            : () async {
+                print(loginController.text);
+                print(passController.text);
+                await authService.signInWithEmailAndPasswordOwned(
+                    loginController.text, passController.text);
+              },
+        padding: const EdgeInsets.all(0.0),
+        child: Container(
           width: MediaQuery.of(context).size.width,
           padding: EdgeInsets.symmetric(vertical: 15),
           alignment: Alignment.center,
@@ -152,8 +150,8 @@ class _LogViewState extends State<LogView> {
             'Login',
             style: TextStyle(fontSize: 20, color: Colors.white),
           ),
-        )
-    );
+        ));
+
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.symmetric(vertical: 15),
@@ -211,13 +209,13 @@ class _LogViewState extends State<LogView> {
     );
   }
 
-  Widget _socialLogin(){
 
+  Widget _socialLogin() {
     const Key googleButtonKey = Key('google');
     const Key facebookButtonKey = Key('facebook');
     const Key emailPasswordButtonKey = Key('email-password');
 
-    const String title ="Tittle";
+    const String title = "Tittle";
     const bool isLoading = false;
 
     final authService = Provider.of<AuthService>(context);
@@ -236,8 +234,9 @@ class _LogViewState extends State<LogView> {
             onPressed: isLoading
                 ? null
                 : () async {
-              await authService.googleSignIn();
-            },
+
+                    await authService.googleSignIn();
+                  },
             color: Colors.white,
           ),
           SizedBox(height: 8),
@@ -246,7 +245,8 @@ class _LogViewState extends State<LogView> {
             assetName: 'assets/fb-logo.png',
             text: 'SignIn With Facebook',
             textColor: Colors.white,
-            onPressed: isLoading ? null : () => "", //,
+            onPressed:
+                isLoading ? null : () => authService.signInWithFacebook(),
             color: Color(0xFF334D92),
           ),
           SizedBox(height: 8),
@@ -254,8 +254,8 @@ class _LogViewState extends State<LogView> {
             key: emailPasswordButtonKey,
             text: 'Sign Up',
             onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => SignUpPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()));
             },
             textColor: Colors.white,
             color: Colors.teal[700],
@@ -325,19 +325,19 @@ class _LogViewState extends State<LogView> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        Text("Enter Email & Password", style: TextStyle(fontSize: 17),),
+        Text(
+          "Enter Email & Password",
+          style: TextStyle(fontSize: 17),
+        ),
         TextField(
-        controller: loginController,
-        decoration: InputDecoration(
-        hintText: 'Email'
-        )),
+            controller: loginController,
+            decoration: InputDecoration(hintText: 'Email')),
         TextField(
-        controller: passController,
-        obscureText: true,
-        decoration: const InputDecoration(
-        labelText: 'Password',
-
-        )),
+            controller: passController,
+            obscureText: true,
+            decoration: const InputDecoration(
+              labelText: 'Password',
+            )),
       ],
     );
   }
