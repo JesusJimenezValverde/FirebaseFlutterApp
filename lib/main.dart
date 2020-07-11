@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'Pages/HomePage/Components/home_login_page.dart';
-import 'Pages/HomePage/Components/home_page.dart';
-import 'Pages/HomePage/Components/loginPage.dart';
-import 'Pages/HomePage/Components/welcomePage.dart';
-import 'Pages/LoginPage/Components/home_page.dart';
-import 'Services/auth.dart';
+import 'package:FirebaseFlutterApp/Pages/SignUp_Page/signUp.dart';
+import 'Pages/WelcomePage/welcome_Page.dart';
+import 'Pages/LoginPage/loginPage.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+import 'Pages/HomePage/home_page.dart';
+import 'Services/auth.dart';
 
 void main() {
   runApp(MyApp());
@@ -43,6 +42,8 @@ class _AppState extends State<MyApp> {
                   return LogView();
                 case AuthStatus.Unauthenticated:
                   return WelcomePage();
+                case AuthStatus.Registering:
+                  return SignUpPage();
               }
               return null;
             },

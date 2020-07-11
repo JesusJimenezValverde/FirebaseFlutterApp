@@ -16,11 +16,11 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
     return Scaffold(
-      appBar: AppBar(title: Text("Home")),
+      appBar: AppBar(title: Text("SignIn")),
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        color: Colors.white,
+        color: Colors.lightGreen,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -34,8 +34,8 @@ class HomePageState extends State<HomePage> {
                   RaisedButton(
                     color: Colors.black,
                     textColor: Colors.white,
-                    child: Text("SignOut"),
-                    onPressed: () {
+                    child: Text("Signout"),
+                    onPressed: () async {
                       authService.signOut();
                     },
                   ),

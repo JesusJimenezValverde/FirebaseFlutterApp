@@ -7,7 +7,8 @@ enum AuthStatus {
   Uninitialized,
   Authenticated,
   Authenticating,
-  Unauthenticated
+  Unauthenticated,
+  Registering
 }
 
 class AuthService with ChangeNotifier {
@@ -23,7 +24,7 @@ class AuthService with ChangeNotifier {
     auth.onAuthStateChanged.listen(_onAuthStateChanged);
   }
 
-  /// This function chage the status
+  /// This function looks for changes in the status and notify the Listeners
   Future<void> _onAuthStateChanged(FirebaseUser firebaseUser) async {
     if (firebaseUser == null) {
       status = AuthStatus.Unauthenticated;
@@ -47,13 +48,15 @@ class AuthService with ChangeNotifier {
       case 'Authenticating':
         status = AuthStatus.Authenticating;
         break;
+      case 'Registering':
+        status = AuthStatus.Registering;
+        break;
     }
+    print(status);
     notifyListeners();
   }
 
   Future<void> googleSignIn() async {
-    status = AuthStatus.Authenticating;
-    notifyListeners();
     try {
       GoogleSignInAccount googleUser =
           await googleSignInV.signIn(); //choose account
@@ -66,7 +69,10 @@ class AuthService with ChangeNotifier {
       );
 
       await auth.signInWithCredential(credential);
-      //FirebaseUser userAuth = authResult.user;
+      if (auth.currentUser() != null) {
+        status = AuthStatus.Authenticated;
+        notifyListeners();
+      }
     } catch (e) {
       status = AuthStatus.Uninitialized;
       notifyListeners();
@@ -75,31 +81,36 @@ class AuthService with ChangeNotifier {
 
   Future<void> signInWithEmailAndPasswordOwned(
       String email, String password) async {
-    status = AuthStatus.Authenticating;
-    notifyListeners();
     try {
       await auth.signInWithCredential(EmailAuthProvider.getCredential(
         email: email,
         password: password,
       ));
+      if (auth.currentUser() != null) {
+        status = AuthStatus.Authenticated;
+        notifyListeners();
+      }
     } catch (e) {
-      print("Account does not exist");
-      status = AuthStatus.Unauthenticated;
+      status = AuthStatus.Uninitialized;
       notifyListeners();
     }
   }
 
   Future<void> signInWithFacebook() async {
-    status = AuthStatus.Authenticating;
-    notifyListeners();
+    //status = AuthStatus.Authenticating;
+    //notifyListeners();
     try {
       FacebookLogin facebookLogin = new FacebookLogin();
       var result = await facebookLogin.logIn(['email']);
       if (result.status == FacebookLoginStatus.loggedIn) {
-        await auth.signInWithCredential(
-          FacebookAuthProvider.getCredential(
-              accessToken: result.accessToken.token),
-        );
+        final AuthCredential credential = FacebookAuthProvider.getCredential(
+            accessToken: result.accessToken.token);
+        print('got the Facebook credential');
+        await auth.signInWithCredential(credential);
+        if (auth.currentUser() != null) {
+          status = AuthStatus.Authenticated;
+          notifyListeners();
+        }
       }
     } catch (e) {
       status = AuthStatus.Uninitialized;
@@ -112,6 +123,7 @@ class AuthService with ChangeNotifier {
       googleUser.clearAuthCache();
     }
     googleSignInV.signOut();
+
     auth.signOut();
     status = AuthStatus.Unauthenticated;
     notifyListeners();
