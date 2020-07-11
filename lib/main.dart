@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'Pages/HomePage/home_page.dart';
-import 'Pages/LoginPage/Components/login_page.dart';
+import 'Pages/HomePage/Components/home_login_page.dart';
+import 'Pages/HomePage/Components/home_page.dart';
+import 'Pages/HomePage/Components/loginPage.dart';
+import 'Pages/HomePage/Components/welcomePage.dart';
+import 'Pages/LoginPage/Components/home_page.dart';
 import 'Services/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -33,13 +36,13 @@ class _AppState extends State<MyApp> {
             builder: (context, AuthService authService, _) {
               switch (authService.status) {
                 case AuthStatus.Uninitialized:
-                  return Text('Cargando');
+                  return WelcomePage();
                 case AuthStatus.Authenticated:
                   return HomePage();
                 case AuthStatus.Authenticating:
-                  return SignIn();
+                  return LogView();
                 case AuthStatus.Unauthenticated:
-                  return SignIn();
+                  return WelcomePage();
               }
               return null;
             },

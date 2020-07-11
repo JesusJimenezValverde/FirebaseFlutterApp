@@ -23,12 +23,30 @@ class AuthService with ChangeNotifier {
     auth.onAuthStateChanged.listen(_onAuthStateChanged);
   }
 
-  /// This function looks for changes in the status and notify the Listeners
+  /// This function chage the status
   Future<void> _onAuthStateChanged(FirebaseUser firebaseUser) async {
     if (firebaseUser == null) {
       status = AuthStatus.Unauthenticated;
     } else {
       status = AuthStatus.Authenticated;
+    }
+    notifyListeners();
+  }
+
+  Future<void> changeStatus(String state) {
+    switch (state) {
+      case 'Unauthenticated':
+        status = AuthStatus.Unauthenticated;
+        break;
+      case 'Uninitialized':
+        status = AuthStatus.Uninitialized;
+        break;
+      case 'Authenticated':
+        status = AuthStatus.Authenticated;
+        break;
+      case 'Authenticating':
+        status = AuthStatus.Authenticating;
+        break;
     }
     notifyListeners();
   }
@@ -65,7 +83,8 @@ class AuthService with ChangeNotifier {
         password: password,
       ));
     } catch (e) {
-      status = AuthStatus.Uninitialized;
+      print("Account does not exist");
+      status = AuthStatus.Unauthenticated;
       notifyListeners();
     }
   }
@@ -93,7 +112,6 @@ class AuthService with ChangeNotifier {
       googleUser.clearAuthCache();
     }
     googleSignInV.signOut();
-
     auth.signOut();
     status = AuthStatus.Unauthenticated;
     notifyListeners();
