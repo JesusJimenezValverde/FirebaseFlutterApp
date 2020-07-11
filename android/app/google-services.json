@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "453997837563",
+    "firebase_url": "https://login-kemeds.firebaseio.com",
+    "project_id": "login-kemeds",
+    "storage_bucket": "login-kemeds.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453997837563:android:d039bf0fc73a4470e0845e",
+        "android_client_info": {
+          "package_name": "com.example.FirebaseFlutterApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453997837563-21mb6knvhd5msso938v323ro35c7po6f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.FirebaseFlutterApp",
+            "certificate_hash": "2b1839d8829324b05b4d55d45ff3997a00c1d645"
+          }
+        },
+        {
+          "client_id": "453997837563-7gdodrg52tuhgbci0p8hhmnrqlksni24.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE9j3gw1A-Z6r3AUsA9xpGePajOqMDaU0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453997837563-7gdodrg52tuhgbci0p8hhmnrqlksni24.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
