@@ -26,7 +26,9 @@ class _WelcomePageState extends State<WelcomePage> {
         padding: EdgeInsets.symmetric(vertical: 13),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(5),
+            ),
             boxShadow: <BoxShadow>[
               BoxShadow(
                   color: Color(0xffdf8e33).withAlpha(100),
@@ -37,7 +39,10 @@ class _WelcomePageState extends State<WelcomePage> {
             color: Colors.white),
         child: Text(
           'Login',
-          style: TextStyle(fontSize: 20, color: Color(0xfff7892b)),
+          style: TextStyle(
+            fontSize: 20,
+            color: Color(0xfff7892b),
+          ),
         ),
       ),
     );
@@ -56,8 +61,13 @@ class _WelcomePageState extends State<WelcomePage> {
         padding: EdgeInsets.symmetric(vertical: 13),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          border: Border.all(color: Colors.white, width: 2),
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
+          ),
+          border: Border.all(
+            color: Colors.white,
+            width: 2,
+          ),
         ),
         child: Text(
           'Register now',
@@ -95,7 +105,7 @@ class _WelcomePageState extends State<WelcomePage> {
       text: TextSpan(
           text: 'K',
           style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.display1,
+            textStyle: Theme.of(context).textTheme.headline4,
             fontSize: 45,
             fontWeight: FontWeight.w700,
             color: Colors.white,
@@ -103,11 +113,17 @@ class _WelcomePageState extends State<WelcomePage> {
           children: [
             TextSpan(
               text: 'EM',
-              style: TextStyle(color: Colors.black, fontSize: 45),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 45,
+              ),
             ),
             TextSpan(
               text: 'EDS',
-              style: TextStyle(color: Colors.white, fontSize: 45),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 45,
+              ),
             ),
           ]),
     );
@@ -121,18 +137,25 @@ class _WelcomePageState extends State<WelcomePage> {
           padding: EdgeInsets.symmetric(horizontal: 20),
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.shade200,
-                    offset: Offset(2, 4),
-                    blurRadius: 5,
-                    spreadRadius: 2)
+            borderRadius: BorderRadius.all(
+              Radius.circular(5),
+            ),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: Colors.grey.shade200,
+                  offset: Offset(2, 4),
+                  blurRadius: 5,
+                  spreadRadius: 2)
+            ],
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xfffbb448),
+                Color(0xffe46b10),
               ],
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xfffbb448), Color(0xffe46b10)])),
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

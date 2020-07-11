@@ -1,4 +1,3 @@
-import 'package:FirebaseFlutterApp/Pages/LoginPage/loginPage.dart';
 import 'package:FirebaseFlutterApp/Services/auth.dart';
 import 'package:provider/provider.dart';
 import '../../Components/Widgets/bezier_Container.dart';
@@ -125,7 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
       text: TextSpan(
           text: 'K',
           style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.display1,
+            textStyle: Theme.of(context).textTheme.headline4,
             fontSize: 30,
             fontWeight: FontWeight.w700,
             color: Color(0xffe46b10),

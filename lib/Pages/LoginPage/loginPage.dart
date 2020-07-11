@@ -30,11 +30,23 @@ class _LogViewState extends State<LogView> {
         child: Row(
           children: <Widget>[
             Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+              padding: EdgeInsets.only(
+                left: 0,
+                top: 10,
+                bottom: 10,
+              ),
+              child: Icon(
+                Icons.keyboard_arrow_left,
+                color: Colors.black,
+              ),
             ),
-            Text('Back',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500))
+            Text(
+              'Back',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ],
         ),
       ),
@@ -49,17 +61,22 @@ class _LogViewState extends State<LogView> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
           ),
           SizedBox(
             height: 10,
           ),
           TextField(
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  fillColor: Color(0xfff3f3f4),
-                  filled: true))
+            obscureText: isPassword,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              fillColor: Color(0xfff3f3f4),
+              filled: true,
+            ),
+          ),
         ],
       ),
     );
@@ -93,9 +110,13 @@ class _LogViewState extends State<LogView> {
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10),
                     alignment: Alignment.centerRight,
-                    child: Text('Forgot Password ?',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w500)),
+                    child: Text(
+                      'Forgot Password ?',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
                   _divider(),
                   _socialLogin(),
@@ -105,7 +126,11 @@ class _LogViewState extends State<LogView> {
               ),
             ),
           ),
-          Positioned(top: 40, left: 0, child: _backButton()),
+          Positioned(
+            top: 40,
+            left: 0,
+            child: _backButton(),
+          ),
         ],
       ),
     ));
@@ -115,43 +140,25 @@ class _LogViewState extends State<LogView> {
     final authService = Provider.of<AuthService>(context);
     bool isLoading = false;
     return RaisedButton(
-        onPressed: isLoading
-            ? null
-            : () async {
-                print(loginController.text);
-                print(passController.text);
-                await authService.signInWithEmailAndPasswordOwned(
-                    loginController.text, passController.text);
-              },
-        padding: const EdgeInsets.all(0.0),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.symmetric(vertical: 15),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.shade200,
-                    offset: Offset(2, 4),
-                    blurRadius: 5,
-                    spreadRadius: 2)
-              ],
-              gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [Color(0xfffbb448), Color(0xfff7892b)])),
-          child: Text(
-            'Login',
-            style: TextStyle(fontSize: 20, color: Colors.white),
+      onPressed: isLoading
+          ? null
+          : () async {
+              print(loginController.text);
+              print(passController.text);
+              await authService.signInWithEmailAndPasswordOwned(
+                loginController.text,
+                passController.text,
+              );
+            },
+      padding: const EdgeInsets.all(0.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(vertical: 15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
           ),
-        ));
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Colors.grey.shade200,
@@ -160,12 +167,21 @@ class _LogViewState extends State<LogView> {
                 spreadRadius: 2)
           ],
           gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              colors: [Color(0xfffbb448), Color(0xfff7892b)])),
-      child: Text(
-        'Login',
-        style: TextStyle(fontSize: 20, color: Colors.white),
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Color(0xfffbb448),
+              Color(0xfff7892b),
+            ],
+          ),
+        ),
+        child: Text(
+          'Login',
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
@@ -180,7 +196,9 @@ class _LogViewState extends State<LogView> {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
               child: Divider(
                 thickness: 1,
               ),
@@ -189,7 +207,9 @@ class _LogViewState extends State<LogView> {
           Text('or'),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
               child: Divider(
                 thickness: 1,
               ),
@@ -206,8 +226,6 @@ class _LogViewState extends State<LogView> {
   Widget _socialLogin() {
     const Key googleButtonKey = Key('google');
     const Key facebookButtonKey = Key('facebook');
-
-    const String title = "Tittle";
     const bool isLoading = false;
 
     final authService = Provider.of<AuthService>(context);
@@ -261,7 +279,10 @@ class _LogViewState extends State<LogView> {
           children: <Widget>[
             Text(
               'Don\'t have an account ?',
-              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             SizedBox(
               width: 10,
@@ -269,9 +290,10 @@ class _LogViewState extends State<LogView> {
             Text(
               'Register',
               style: TextStyle(
-                  color: Color(0xfff79c4f),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600),
+                color: Color(0xfff79c4f),
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ],
         ),
@@ -285,7 +307,7 @@ class _LogViewState extends State<LogView> {
       text: TextSpan(
           text: 'W',
           style: GoogleFonts.portLligatSans(
-            textStyle: Theme.of(context).textTheme.display1,
+            textStyle: Theme.of(context).textTheme.headline4,
             fontSize: 40,
             fontWeight: FontWeight.w700,
             color: Color(0xffe46b10),
@@ -293,11 +315,17 @@ class _LogViewState extends State<LogView> {
           children: [
             TextSpan(
               text: 'ell',
-              style: TextStyle(color: Colors.black, fontSize: 40),
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 40,
+              ),
             ),
             TextSpan(
               text: 'come',
-              style: TextStyle(color: Color(0xffe46b10), fontSize: 40),
+              style: TextStyle(
+                color: Color(0xffe46b10),
+                fontSize: 40,
+              ),
             ),
           ]),
     );
@@ -311,8 +339,11 @@ class _LogViewState extends State<LogView> {
           style: TextStyle(fontSize: 17),
         ),
         TextField(
-            controller: loginController,
-            decoration: InputDecoration(hintText: 'Email')),
+          controller: loginController,
+          decoration: InputDecoration(
+            hintText: 'Email',
+          ),
+        ),
         TextField(
             controller: passController,
             obscureText: true,
