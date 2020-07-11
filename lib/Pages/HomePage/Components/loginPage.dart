@@ -10,7 +10,6 @@ import 'package:provider/provider.dart';
 
 class LogView extends StatefulWidget {
   LogView({Key key, this.title}) : super(key: key);
-
   final String title;
 
   @override
@@ -18,10 +17,12 @@ class LogView extends StatefulWidget {
 }
 
 class _LogViewState extends State<LogView> {
+
   TextEditingController loginController = new TextEditingController();
   TextEditingController passController = new TextEditingController();
 
   Widget _backButton() {
+
     final authService = Provider.of<AuthService>(context);
 
     return InkWell(
@@ -73,6 +74,7 @@ class _LogViewState extends State<LogView> {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
         body: Container(
+
       height: height,
       child: Stack(
         children: <Widget>[
@@ -149,6 +151,7 @@ class _LogViewState extends State<LogView> {
             style: TextStyle(fontSize: 20, color: Colors.white),
           ),
         ));
+
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.symmetric(vertical: 15),
@@ -206,6 +209,7 @@ class _LogViewState extends State<LogView> {
     );
   }
 
+
   Widget _socialLogin() {
     const Key googleButtonKey = Key('google');
     const Key facebookButtonKey = Key('facebook');
@@ -230,6 +234,7 @@ class _LogViewState extends State<LogView> {
             onPressed: isLoading
                 ? null
                 : () async {
+
                     await authService.googleSignIn();
                   },
             color: Colors.white,
